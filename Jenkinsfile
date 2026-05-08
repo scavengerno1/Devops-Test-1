@@ -12,16 +12,21 @@ pipeline {
                 cleanWs()
             }
         }
+
         stage('Checkout from SCM') {
             steps {
-                git credentialsId: 'Git', url: 'https://github.com/scavengerno1/Devops-Test-1.git'
+                git branch: 'main',
+                    credentialsId: 'Git',
+                    url: 'https://github.com/scavengerno1/Devops-Test-1.git'
             }
         }
+
         stage('Build') {
             steps {
                 sh 'mvn clean package'
             }
         }
+
         stage('Test') {
             steps {
                 sh 'mvn test'
