@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         maven 'maven3'
-        java 'java17'
+        jdk 'java17'
     }
 
     stages {
@@ -22,6 +22,10 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
     }
 }
