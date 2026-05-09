@@ -10,7 +10,7 @@ pipeline {
         appName = 'myapp'
         version = '1.0.0'
         DOCKER_USER = 'scavengerno1'
-        DOCKER_PASS = 'dockerhub'
+        DOCKER_PASS = credentials('DockerHub') 
         IMAGE_NAME = "${DOCKER_USER}/${appName}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
     }
@@ -66,7 +66,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', DOCKER_PASS) {
-                        docker_image = docker.build "${IMAGE_NAME}"
+                        docker_image = docker.build("${IMAGE_NAME}:${IMAGE_TAG}", '.')
                     }
 
                     docker.withRegistry('', DOCKER_PASS) {
