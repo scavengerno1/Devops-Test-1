@@ -6,6 +6,15 @@ pipeline {
         jdk 'java17'
     }
 
+    environment {
+        appName = 'myapp'
+        version = '1.0.0'
+        DOCKER_USER = 'scavengerno1'
+        DOCKER_PASS = 'dockerHub'
+        IMAGE_NAME = "${DOCKER_USER}/${appName}"
+        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+    }
+
     stages {
         stage('Clean workspace') {
             steps {
@@ -50,6 +59,20 @@ pipeline {
                         waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube'
                     }
                 }
+            }
+        }
+
+        stage('Build & Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('', DOCKER_PASS) {
+                        docker_image = docker.build "${IMAGE_NAME}"
+                    }
+
+                    docker.withRegistry('', DOCKER_PASS) {
+                        docker_image.push("${IMAGE_TAG}")
+                        docker_image.push('latest')
+                    }
             }
         }
     }
