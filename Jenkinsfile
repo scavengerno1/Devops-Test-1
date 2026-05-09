@@ -7,7 +7,6 @@ pipeline {
     }
 
     stages {
-
         stage('Clean workspace') {
             steps {
                 cleanWs()
@@ -48,11 +47,10 @@ pipeline {
             steps {
                 script {
                     timeout(time: 1, unit: 'HOURS') {
-                        waitForQualityGate abortPipeline: false
+                        waitForQualityGate abortPipeline: false, credentialsId: 'Sonarqube-Server'
                     }
                 }
             }
         }
-
     }
 }
