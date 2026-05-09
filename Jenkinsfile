@@ -7,6 +7,7 @@ pipeline {
     }
 
     stages {
+
         stage('Clean workspace') {
             steps {
                 cleanWs()
@@ -36,21 +37,22 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv(credentialsId: 'SonarQube') {
+                    withSonarQubeEnv('SonarQube') {
                         sh 'mvn sonar:sonar'
                     }
                 }
             }
+        }
 
-            stage('quality gate') {
-                steps {
-                    script {
-                        timeout(time: 1, unit: 'HOURS') {
-                            waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube'
-                        }
+        stage('Quality Gate') {
+            steps {
+                script {
+                    timeout(time: 1, unit: 'HOURS') {
+                        waitForQualityGate abortPipeline: false
                     }
                 }
             }
         }
+
     }
 }
