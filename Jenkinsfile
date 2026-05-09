@@ -36,8 +36,18 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                withSonarQubeEnv(credentialsId: 'SonarQube') {
-                    sh 'mvn sonar:sonar'
+                    withSonarQubeEnv(credentialsId: 'SonarQube') {
+                        sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+
+            stage('quality gate') {
+                steps {
+                    script {
+                        timeout(time: 1, unit: 'HOURS') {
+                            waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube'
+                        }
                     }
                 }
             }
