@@ -3,8 +3,9 @@ FROM tomcat:9.0.117-jre11-temurin
 # Remove default ROOT app
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy your WAR file
-COPY target/*.war /usr/local/tomcat/webapps/devops-project-1.war
+# Copy your WAR file or HTML file to the Tomcat webapps directory
+COPY Project-1/Devops-Test-1/src/main/webapp/index.html  /usr/local/tomcat/webapps/ROOT/index.html
+
 
 EXPOSE 8080
 
