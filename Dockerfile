@@ -1,4 +1,4 @@
-FROM tomcat:9.0.96-jre11-temurin
+FROM tomcat:9.0.117-jre11-temurin
 
 # Remove default ROOT app
 RUN rm -rf /usr/local/tomcat/webapps/*
