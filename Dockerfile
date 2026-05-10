@@ -4,7 +4,8 @@ FROM tomcat:9.0.117-jre11-temurin
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy your WAR file or HTML file to the Tomcat webapps directory
-COPY Project-1/Devops-Test-1/src/main/webapp/index.html  /usr/local/tomcat/webapps/ROOT/index.html
+COPY src/main/webapp/index.html /usr/local/tomcat/webapps/ROOT/index.html
+
 
 
 EXPOSE 8080
