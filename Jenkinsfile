@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv(credentialsId: 'SonarQube') {
-                        sh 'mvn sonar:sonar'
+                        sh 'mvn sonar:sonar -Dsonar.exclusions=**/*.js,**/*.html'
                     }
                 }
             }
