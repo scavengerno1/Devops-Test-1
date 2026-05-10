@@ -4,7 +4,7 @@ FROM tomcat:9.0.117-jre11-temurin
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy your WAR file
-COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+COPY target/*.war /usr/local/tomcat/webapps/devops-project-1.war
 
 EXPOSE 8080
 
